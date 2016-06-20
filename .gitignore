@@ -1,3 +1,11 @@
+#other
+*.user
+*.sdf 
+*.opensdf 
+*.aps
+*.pdb
+res
+
 # Compiled Object files
 *.slo
 *.lo
