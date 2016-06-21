@@ -82,13 +82,17 @@ vector<LabirynthDirection> MazeScout::getEscapePath()
 ENavigationResult MazeScout::gotoCell(cell *targetDestination, vector<cell*> *newFrontLine)
 {
 	if (targetDestination != cursorPoint)
-	{	
+	{
+		// try go back to the common for both cells crossroad
+
 		bool movementResult = findCrossroad(targetDestination);
 
 		if (!movementResult)
 		{
 			return NR_DEAD_END;
 		}
+
+		// try go forward to the destination cell
 
 		vector<LabirynthDirection> forwardPath = getForwardPathTo(targetDestination);
 		movementResult = followThePath(forwardPath);
@@ -99,8 +103,10 @@ ENavigationResult MazeScout::gotoCell(cell *targetDestination, vector<cell*> *ne
 		}
 	}
 
+	// add neighbors, if not yet exist
+
 	ENavigationResult creationRes;
-	
+		
 	creationRes = createCell(LD_UP, newFrontLine);
 	if (creationRes == NR_EXIT_FOUND) return NR_EXIT_FOUND;
 
@@ -231,13 +237,11 @@ ENavigationResult MazeScout::createCell(LabirynthDirection dir, vector<cell*> *n
 
 			mazeMap.push_back(newCell);
 			newFrontLine->push_back(newCell);
-
-			//cout << cursorPoint->x << ":" << cursorPoint->y << " ---> " << "(" << newCell->x << ":" << newCell->y << "); " << endl;
-			//Sleep(500);
 		}
 
 		if (newCell->x == MAP_SIZE-1 && newCell->y == MAP_SIZE-1)
 		{
+			// finally, but...
 			// can't touch this
 			return NR_EXIT_FOUND;
 		}
