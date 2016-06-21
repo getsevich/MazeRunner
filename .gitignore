@@ -5,6 +5,7 @@
 *.aps
 *.pdb
 res
+debug
 
 # Compiled Object files
 *.slo
